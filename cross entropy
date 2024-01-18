@@ -1,0 +1,18 @@
+def get_onehot(labels):
+    labels = np.array(labels)
+    labels = labels.reshape(-1)
+    return np.eye(3)[labels]
+
+def crossentropy(preds, labels):
+    batch_size, num_classes = preds.shape
+    loss = 0.0
+    labels = get_onehot(labels)
+    for i in range(batch_size):
+        loss -= (np.sum(labels[i,:] * np.log(preds[i,:])))
+    return loss/batch_size
+
+if __name__ == '__main__':
+    preds = np.array([[0.0420, 0.1142, 0.8438], [0.0159, 0.1173, 0.8668], [0.0420, 0.1142, 0.8438]])
+    labels = np.array([[0], [1], [2]])
+
+    print(crossentropy(preds, labels))
